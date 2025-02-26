@@ -1,0 +1,187 @@
+import time
+
+import os
+
+import random
+
+inputName = 1
+
+loop = 1
+
+loop2 = 1
+
+loop3 = 1
+
+loop4 = 1
+
+while loop  < 2:
+
+    print("""
+
+    Welcome to Group Maker    v3
+
+    Starting...
+
+    """)
+
+    time.sleep(5)
+
+    print("""
+
+    Enter the group size here:
+      
+    """)
+
+    while loop2  < 2:
+
+        numberOfGroups = input()
+
+        try:
+
+            numberOfGroups = int(numberOfGroups)
+
+            break
+    
+        except ValueError:
+
+            print("Invalid input. Please enter a valid number.")
+
+            print("")
+
+        else:
+
+             loop2 = 2
+
+
+    time.sleep(1)
+
+    studentlist = ["Shahood", "Masion", "Nate", "Gavin", "Muntag", "leo", "Christopher", "Marcos", "Jaiden", "Aidan", "Ryan", "Jacob Edward Sour", "Collyn", "Gavin Hood", "Andue", "Sam", "Mr.A", "Gabe", "Anthony", "Noha"]
+
+    while loop3  < 2:
+
+        print("""
+
+        Student List:
+      
+        """)
+
+        print(f"{studentlist}")
+
+        time.sleep(2)
+
+        print("""
+
+     Enter the names of any people you dont whant to be placed together here(Nate, Masion  for example):
+      
+        """)
+
+        excludedStudents = input()
+
+        excludedStudents = [name.strip() for name in excludedStudents.split(',')]
+
+        if any(name not in studentlist for name in excludedStudents):
+
+            time.sleep(1)
+
+            print("")
+
+            print("Please enter a Valid name")
+
+        else:
+
+            loop3 += 1
+
+    time.sleep(1)
+
+    print("")
+
+    print(f"Group size is: {numberOfGroups}")
+
+    print("")
+
+    print("Making Groups...")
+
+    print("")
+
+    time.sleep(3)
+
+    random.shuffle(studentlist)
+
+    groups = [studentlist[i:i + numberOfGroups] for i in range(0, len(studentlist), numberOfGroups)]
+
+    for i, group in enumerate(groups):
+
+        print(f"Group {i + 1}: {group}")  
+
+        print("")
+
+        time.sleep(2)
+    
+        if excludedStudents != excludedStudents in group and excludedStudents in group:
+                
+         random.shuffle(studentlist)
+
+         print("Reshuffling...")
+
+         print("")
+
+                
+         groups = [studentlist[i:i + numberOfGroups] for i in range(0, len(studentlist), numberOfGroups)]
+
+    time.sleep(6)
+
+    print("""
+
+    Whould you like to make another Group?(Yes or No):
+
+    """)
+
+    loop4 = 1
+
+    while loop4  < 2:
+
+        loopAgain = input()
+
+        if loopAgain == "No":
+
+            print("""
+
+            Thank you for using Group Maker v3
+
+            """)
+            loop = 2
+
+            loop4 = 2
+
+        if loopAgain == "Yes":
+
+            print("""
+
+            Reseting...
+
+            """)
+            loop = 1
+            
+            loop2 = 1
+
+            loop3 = 1
+
+            loop4 = 2
+
+        if loopAgain != "Yes" and loopAgain != "No":
+            
+            print("Invalid input. Please enter Yes or No.")
+
+            print("")
+         
+
+
+    
+    
+
+    
+
+
+
+
+
