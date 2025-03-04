@@ -1,187 +1,289 @@
-import time
+class users:
 
-import os
+    def __init__(self, name, score):
+        
+        self.name = name
+
+        self.score = score
+
+    def assign_score(self, score):
+
+        self.score = score
+
+    def display_properties(self):
+
+        print("Properties of the User:")
+
+        print("Name:", self.name)
+
+        print("Score:", self.score)
+
+import time
 
 import random
 
-inputName = 1
+error = 1
 
 loop = 1
+
+gameLoop = 1
+
+aftergameloop = 1
+
+leaderboardloop = 1
 
 loop2 = 1
 
 loop3 = 1
 
-loop4 = 1
+user_dict = {}  # Dictionary to store user instances
 
-while loop  < 2:
-
-    print("""
-
-    Welcome to Group Maker    v3
-
-    Starting...
-
-    """)
-
-    time.sleep(5)
-
-    print("""
-
-    Enter the group size here:
+print("""
       
-    """)
+      Welcome to Guess the Number 2.0
 
-    while loop2  < 2:
+      """)
 
-        numberOfGroups = input()
+time.sleep(2)
 
-        try:
+while loop < 2:
 
-            numberOfGroups = int(numberOfGroups)
+    guess_count = 0  # Initialize guess counter
 
-            break
-    
-        except ValueError:
+    random_number = random.randint(1, 100)  # Generate a random number between 1 and 100
 
-            print("Invalid input. Please enter a valid number.")
+    gameLoop = 2
+    leaderboardloop = 2
+    aftergameloop = 2
 
-            print("")
+    print("""
+      
+      Would you like to play(p) or see the leaderboard(l)?
 
-        else:
+      """)
 
-             loop2 = 2
+    user_choice = input()  # Store the input in a variable
 
-
-    time.sleep(1)
-
-    studentlist = ["Shahood", "Masion", "Nate", "Gavin", "Muntag", "leo", "Christopher", "Marcos", "Jaiden", "Aidan", "Ryan", "Jacob Edward Sour", "Collyn", "Gavin Hood", "Andue", "Sam", "Mr.A", "Gabe", "Anthony", "Noha"]
-
-    while loop3  < 2:
+    if user_choice == "p":
 
         print("""
-
-        Student List:
       
-        """)
+        Starting...
 
-        print(f"{studentlist}")
+       """)
 
         time.sleep(2)
 
         print("""
-
-     Enter the names of any people you dont whant to be placed together here(Nate, Masion  for example):
       
+        Please input your name
+
         """)
 
-        excludedStudents = input()
-
-        excludedStudents = [name.strip() for name in excludedStudents.split(',')]
-
-        if any(name not in studentlist for name in excludedStudents):
-
-            time.sleep(1)
-
-            print("")
-
-            print("Please enter a Valid name")
-
-        else:
-
-            loop3 += 1
-
-    time.sleep(1)
-
-    print("")
-
-    print(f"Group size is: {numberOfGroups}")
-
-    print("")
-
-    print("Making Groups...")
-
-    print("")
-
-    time.sleep(3)
-
-    random.shuffle(studentlist)
-
-    groups = [studentlist[i:i + numberOfGroups] for i in range(0, len(studentlist), numberOfGroups)]
-
-    for i, group in enumerate(groups):
-
-        print(f"Group {i + 1}: {group}")  
+        name_input = input()
 
         print("")
 
+        print(f"Welcome {name_input}")
+
+        user1 = users(name_input, 0)
+        user_dict[name_input] = user1  # Add user to dictionary
+
         time.sleep(2)
-    
-        if excludedStudents != excludedStudents in group and excludedStudents in group:
-                
-         random.shuffle(studentlist)
 
-         print("Reshuffling...")
+        gameLoop = 1
 
-         print("")
+    elif user_choice == "l":  # Use elif to avoid multiple input prompts
 
-                
-         groups = [studentlist[i:i + numberOfGroups] for i in range(0, len(studentlist), numberOfGroups)]
+        print("Loading leaderboard....")
 
-    time.sleep(6)
+        time.sleep(2)
 
-    print("""
+        leaderboardloop = 1
 
-    Whould you like to make another Group?(Yes or No):
+    while leaderboardloop < 2:
 
-    """)
+     print("========Leaderboard==========")
 
-    loop4 = 1
+     time.sleep(2)
 
-    while loop4  < 2:
+     f = open("SaveFile.txt", "r")
 
-        loopAgain = input()
+     read_values = f.read() #open and read the file
 
-        if loopAgain == "No":
+     split_values = read_values.split(",") #separate the data by commas and save the data to a list
+
+     leaderboard = [] #open and read the file
+
+     for i in range(0, len(split_values) - 1, 2):
+
+         name = split_values[i].strip()
+
+         score = int(split_values[i + 1].strip())
+
+         leaderboard.append((name, score))
+
+     leaderboard.sort(key=lambda x: x[1], reverse=True)
+
+     leaderboard_str = "\n".join([f"Name: {name}, Score: {score}" for name, score in leaderboard])  # Join the sorted leaderboard into a string
+
+     print(leaderboard_str) #print the leaderboard
+
+     print("\n") #print a new line
+
+     leaderboardloop = 2
+
+    while gameLoop < 2:
+
+        print("""
+      
+        Please enter a number between 1 and 100
+
+        """)
+
+        try:
+            number = int(input())  # Get user input and convert to integer
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+            continue  # Skip the rest of the loop and prompt for input again
+
+        guess_count += 1  # Increment guess counter
+
+        if number > random_number:
 
             print("""
+            The number is lower!
+            """)
 
-            Thank you for using Group Maker v3
+            time.sleep(1)
+
+        elif number < random_number:
+
+            print("""
+            The number is higher!
+            """)
+
+            time.sleep(1)
+
+        if number == random_number:
+
+            print("""
+      
+            You guessed the number!
 
             """)
+
+            time.sleep(2)
+
+            print(f"The number was {random_number}")
+
+            gameLoop = 2
+
+            aftergameloop = 1
+
+        else:
+
+            print("""
+            Try again!
+            """)
+
+            gameLoop = 1
+
+        if guess_count >= 10:  # Check if guess count has reached 10
+
+            print("""
+      
+            You've used all your guesses. Game over!
+
+            """)
+
+            time.sleep(2)
+
+            print(f"The number was {random_number}")
+
+            time.sleep(2)
+
+            gameLoop = 2
+
+            aftergameloop = 1
+
+    while aftergameloop < 2:
+
+        score = 10 - guess_count
+
+        user1.assign_score(score)
+
+        print("""
+      
+        Here is your score:
+
+        """)
+
+        print(f"{score}")
+
+        print("""
+      
+        Would you like to play again? (y/n)
+
+        """)
+
+        play_again = input()  # Store the input in a variable
+
+        if play_again == "y":
+
+            print("Starting...")
+
+            time.sleep(2)
+
+            aftergameloop = 2  
+
+            gameLoop = 1
+
+        elif play_again == "n":
+
+            print("Saving...")
+
+            f = open("SaveFile.txt", "a")
+
+            f.write(f"\nName: {user1.name}, Score: {score}")  # Add a newline character at the beginning
+
+            f.close()
+
             loop = 2
 
-            loop4 = 2
+            time.sleep(2)
 
-        if loopAgain == "Yes":
+            gameLoop = 2
 
-            print("""
+            aftergameloop = 2
 
-            Reseting...
+            print("========Leaderboard==========")
 
-            """)
-            loop = 1
-            
-            loop2 = 1
+            time.sleep(2)
 
-            loop3 = 1
+            f = open("SaveFile.txt", "r")
 
-            loop4 = 2
+            read_values = f.read() #open and read the file
 
-        if loopAgain != "Yes" and loopAgain != "No":
-            
-            print("Invalid input. Please enter Yes or No.")
+            split_values = read_values.split(",") #separate the data by commas and save the data to a list
 
-            print("")
-         
+            leaderboard = [] #open and read the file
 
+            for i in range(0, len(split_values) - 1, 2):
 
-    
-    
+                name = split_values[i].strip()
 
-    
+                score = int(split_values[i + 1].strip())
 
+                leaderboard.append((name, score))
 
+            leaderboard.sort(key=lambda x: x[1], reverse=True)
+
+            leaderboard_str = "\n".join([f"Name: {name}, Score: {score}" for name, score in leaderboard])  # Join the sorted leaderboard into a string
+
+            print(leaderboard_str) #print the leaderboard
+
+            print("\n") #print a new line
 
 
 
