@@ -1,39 +1,26 @@
 class users:
 
     def __init__(self, name, score):
-        
         self.name = name
-
         self.score = score
 
     def assign_score(self, score):
-
         self.score = score
 
     def display_properties(self):
-
         print("Properties of the User:")
-
         print("Name:", self.name)
-
         print("Score:", self.score)
 
 import time
-
 import random
 
 error = 1
-
 loop = 1
-
 gameLoop = 1
-
 aftergameloop = 1
-
 leaderboardloop = 1
-
 loop2 = 1
-
 loop3 = 1
 
 user_dict = {}  # Dictionary to store user instances
@@ -103,35 +90,51 @@ while loop < 2:
 
     while leaderboardloop < 2:
 
-     print("========Leaderboard==========")
+        print("========Leaderboard==========")
 
-     time.sleep(2)
+        time.sleep(2)
 
-     f = open("SaveFile.txt", "r")
+        #open and read the file
+        f = open("SaveFile.txt", "r")
 
-     read_values = f.read() #open and read the file
+        read_values = f.read()
 
-     split_values = read_values.split(",") #separate the data by commas and save the data to a list
+        #separate the data by newlines and save the data to a list
 
-     leaderboard = [] #open and read the file
+        split_values = read_values.split("\n")
 
-     for i in range(0, len(split_values) - 1, 2):
+        # Create a list of tuples (name, score) and sort by score in descending order
 
-         name = split_values[i].strip()
+        leaderboard = []
 
-         score = int(split_values[i + 1].strip())
+        for entry in split_values:
 
-         leaderboard.append((name, score))
+            if entry.strip():  # Check if the entry is not empty
 
-     leaderboard.sort(key=lambda x: x[1], reverse=True)
+                try:
 
-     leaderboard_str = "\n".join([f"Name: {name}, Score: {score}" for name, score in leaderboard])  # Join the sorted leaderboard into a string
+                    name, score = entry.split(", Score: ")
 
-     print(leaderboard_str) #print the leaderboard
+                    name = name.replace("Name: ", "").strip()
 
-     print("\n") #print a new line
+                    score = int(score.strip())
 
-     leaderboardloop = 2
+                    leaderboard.append((name, score))
+
+                except ValueError:
+
+                    print(f"Skipping invalid entry: {entry}")
+
+        leaderboard.sort(key=lambda x: x[1], reverse=True)
+
+        # Join the sorted leaderboard into a string
+        leaderboard_str = "\n".join([f"Name: {name}, Score: {score}" for name, score in leaderboard])
+
+        print(leaderboard_str) #print the leaderboard
+
+        print("\n") #print a new line
+
+        leaderboardloop = 2
 
     while gameLoop < 2:
 
@@ -235,8 +238,7 @@ while loop < 2:
 
             time.sleep(2)
 
-            aftergameloop = 2  
-
+            aftergameloop = 1  # Reset aftergameloop to 1 to continue the loop
             gameLoop = 1
 
         elif play_again == "n":
@@ -259,31 +261,46 @@ while loop < 2:
 
             print("========Leaderboard==========")
 
-            time.sleep(2)
+        time.sleep(2)
 
-            f = open("SaveFile.txt", "r")
+        #open and read the file
+        f = open("SaveFile.txt", "r")
 
-            read_values = f.read() #open and read the file
+        read_values = f.read()
 
-            split_values = read_values.split(",") #separate the data by commas and save the data to a list
+        #separate the data by newlines and save the data to a list
+        split_values = read_values.split("\n")
 
-            leaderboard = [] #open and read the file
+        # Create a list of tuples (name, score) and sort by score in descending order 
 
-            for i in range(0, len(split_values) - 1, 2):
+        leaderboard = []
 
-                name = split_values[i].strip()
+        for entry in split_values:
 
-                score = int(split_values[i + 1].strip())
+            if entry.strip():  # Check if the entry is not empty
 
-                leaderboard.append((name, score))
+                try:
 
-            leaderboard.sort(key=lambda x: x[1], reverse=True)
+                    name, score = entry.split(", Score: ")
 
-            leaderboard_str = "\n".join([f"Name: {name}, Score: {score}" for name, score in leaderboard])  # Join the sorted leaderboard into a string
+                    name = name.replace("Name: ", "").strip()
 
-            print(leaderboard_str) #print the leaderboard
+                    score = int(score.strip())
 
-            print("\n") #print a new line
+                    leaderboard.append((name, score))
+
+                except ValueError:
+
+                    print(f"Skipping invalid entry: {entry}")
+
+        leaderboard.sort(key=lambda x: x[1], reverse=True)
+
+        # Join the sorted leaderboard into a string
+        leaderboard_str = "\n".join([f"Name: {name}, Score: {score}" for name, score in leaderboard])
+
+        print(leaderboard_str) #print the leaderboard
+
+        print("\n") #print a new line
 
 
 
